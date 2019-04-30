@@ -1,0 +1,35 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\work\\nodejs\\node.exe',
+1 verbose cli   'C:\\work\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'start' ]
+2 info using npm@3.10.10
+3 info using node@v6.11.0
+4 verbose run-script [ 'prestart', 'start', 'poststart' ]
+5 info lifecycle lbc@0.1.0~prestart: lbc@0.1.0
+6 silly lifecycle lbc@0.1.0~prestart: no script for prestart, continuing
+7 info lifecycle lbc@0.1.0~start: lbc@0.1.0
+8 verbose lifecycle lbc@0.1.0~start: unsafe-perm in lifecycle true
+9 verbose lifecycle lbc@0.1.0~start: PATH: C:\work\nodejs\node_modules\npm\bin\node-gyp-bin;D:\workspace\lbc-harvester\node_modules\.bin;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\system32;C:\Program Files (x86)\Skype\Phone\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\work\nodejs\;C:\Program Files\Git\cmd;C:\Users\aibrahim\AppData\Local\Microsoft\WindowsApps;C:\Users\aibrahim\AppData\Roaming\npm;C:\work\Android\sdk;C:\work\Android\sdk\platform-tools;C:\work\Android\sdk\tools;C:\work\Android\AndroidStudo;C:\work\Android\AndroidStudio\bin;C:\work\Android\AndroidStudio\gradle;C:\work\Android\AndroidStudio\gradle\gradle-3.2\bin;C:\work\Android\AndroidStudio\plugins\android\lib\templates\gradle\wrapper;C:\work\gradle-3.5\bin;C:\Program Files (x86)\Microsoft VS Code\bin
+10 verbose lifecycle lbc@0.1.0~start: CWD: D:\workspace\lbc-harvester
+11 silly lifecycle lbc@0.1.0~start: Args: [ '/d /s /c', 'supervisor -w app.js -- app.js' ]
+12 verbose stack Error: kill ENOSYS
+12 verbose stack     at exports._errnoException (util.js:1018:11)
+12 verbose stack     at process.kill (internal/process.js:190:13)
+12 verbose stack     at process.listener (C:\work\nodejs\node_modules\npm\node_modules\npmlog\node_modules\gauge\node_modules\signal-exit\index.js:86:15)
+12 verbose stack     at emitNone (events.js:91:20)
+12 verbose stack     at process.emit (events.js:185:7)
+12 verbose stack     at processEmit (C:\work\nodejs\node_modules\npm\node_modules\npmlog\node_modules\gauge\node_modules\signal-exit\index.js:146:32)
+12 verbose stack     at processEmit (C:\work\nodejs\node_modules\npm\node_modules\npm-registry-client\node_modules\npmlog\node_modules\gauge\node_modules\signal-exit\index.js:146:32)
+12 verbose stack     at Signal.wrap.onsignal (internal/process.js:217:44)
+13 verbose cwd D:\workspace\lbc-harvester
+14 error Windows_NT 10.0.14393
+15 error argv "C:\\work\\nodejs\\node.exe" "C:\\work\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "start"
+16 error node v6.11.0
+17 error npm  v3.10.10
+18 error code ENOSYS
+19 error errno ENOSYS
+20 error syscall kill
+21 error kill ENOSYS
+22 error If you need help, you may report this error at:
+22 error     <https://github.com/npm/npm/issues>
+23 verbose exit [ 1, true ]
