@@ -1,4 +1,5 @@
 console.clear();
+console.log("lbc running");
 
 var express = require("express");
 var app = express();
@@ -157,26 +158,28 @@ let querys = {
   h: {
     fav: true,
     url:
-      "samyang OR rokinon OR sony nex OR sony 6000 OR sony a6300 OR ilce OR sony a7 OR sony a7ii OR sony a7s OR sony fe"
+      "samyang OR rokinon OR sony nex OR sony 6000 OR sony a6300 OR ilce OR sony a7 OR sony a7ii OR sony a7iii OR sony a7rii OR sony a7riii OR sony a7s OR sony fe"
   },
   g: {
     fav: true,
     url: "contax OR contarex OR icarex OR FLEKTOGON OR Rolleiflex OR asahi"
   },
+  k: {
+    fav: true,
+    url: "minolta OR zeiss OR olympus OR canon OR nikon OR rollei OR rokkor OR contax OR yashica OR leica OR pentax"
+  },
   a: {
     fav: false,
     url:
-      "35mm 1.2 OR 35mm 1.4 OR 35mm 1.8 OR 35mm 2 OR 35mm 2.8 OR 50mm 1.2 OR 50mm 1.4 OR 50mm 1.8 OR 50mm 2.8 OR 55mm 1.2 OR 55mm 1.4 OR 55mm 1.8 OR 55mm 2 OR 55mm 2.8 OR 50mm 2"
+      "35mm 1.2 OR 35mm 1.4 OR 35mm 1.8 OR 35mm 2 OR 35mm 2.8 OR 50mm 1.2 OR 50mm 1.4 OR 50mm 1.8 OR 50mm 2.8 OR 55mm 1.2 OR 55mm 1.4 OR 55mm 1.8 OR 55mm 2 OR 55mm 2.8 OR 50mm 2 OR 35mm OR 57mm OR 24mm"
   },
   j: {
     fav: false,
-    url:
-      "minolta OR zeiss OR olympus OR canon OR nikon OR rollei OR rokkor OR contax OR yashica OR leica OR pentax "
+    url: "minolta OR zeiss OR olympus OR canon OR nikon OR rollei OR rokkor OR contax OR yashica OR leica OR pentax "
   },
   b: {
     fav: false,
-    url:
-      "Contax OR Carl zeiss OR m42 OR bessa OR summicron OR argentique OR olympus om OR Minolta MD OR leicaflex OR leica"
+    url: "Contax OR Carl zeiss OR m42 OR bessa OR summicron OR argentique OR olympus om OR Minolta MD OR leicaflex OR leica"
   },
   c: {
     fav: false,
@@ -190,17 +193,15 @@ let querys = {
   },
   e: {
     fav: false,
-    url:
-      "35mm 1.2 OR 35mm 1.4  OR 35mm 1.6  OR 35mm 1.8  OR 35mm 2  OR 35mm 2.8  OR 35mm 3  OR 35mm 3.5  OR 35mm OR 57mm OR 24mm"
+    url: "35mm 1.2 OR 35mm 1.4 OR 35mm 1.6 OR 35mm 1.8 OR 35mm 2 OR 35mm 2.8 OR 35mm 3 OR 35mm 3.5 OR 35mm OR 57mm OR 24mm"
   },
   f: {
     fav: false,
-    url: "50mm f1.2 OR  50mm F1,2 OR 50mm  F/1.2 OR 50mm F/1,2 OR 50mm 1:1,2 "
+    url: "50mm f1.2 OR 50mm F1,2 OR 50mm F/1.2 OR 50mm F/1,2 OR 50mm 1:1,2 "
   },
   i: {
     fav: false,
-    url:
-      "100mm f2 OR 100mm f2.8 OR 135mm f2 OR 85mm OR 200mm 2.8 OR 200mm 2 OR 300mm 2.8 OR 400mm 2.8 OR 16-35mm "
+    url: "100mm f2 OR 100mm f2.8 OR 135mm f2 OR 85mm OR 200mm 2.8 OR 200mm 2 OR 300mm 2.8 OR 400mm 2.8 OR 16-35mm "
   }
 };
 
@@ -213,14 +214,10 @@ var createHtml = function(datafav, data) {
 
   var createAnnonceLi = function(annonce) {
     var htmltmp =
-      '<li ><a target="_blank" href="' +
-      annonce["link"] +
-      '" title="' +
-      annonce["title"] +
-      '" class="list_item clearfix trackable" >';
+      '<li ><a target="_blank" href="' + annonce["link"] + '" title="' + annonce["title"] + '" class="list_item clearfix trackable" >';
     if (annonce["images"] != null && annonce["images"][0] != null) {
       htmltmp +=
-        '<div class="item_image"><img style="display:block;  max-width: 250px;max-height: 150px;" content="' +
+        '<div class="item_image"><img style="display:block; max-width: 250px;max-height: 150px;" content="' +
         annonce["images"][0] +
         '" src="' +
         annonce["images"][0] +
@@ -237,7 +234,7 @@ var createHtml = function(datafav, data) {
       d.getHours() +
       ":" +
       d.getMinutes() +
-      "   le  " +
+      " le " +
       d.getUTCDate() +
       "/" +
       d.getMonth() +
@@ -291,20 +288,19 @@ app.get("/reset", function(req, res) {
 });
 
 app.get("/", function(req, res) {
+  console.log("startProcessing");
   startProcessing(res);
 });
 
 app.get("/test", function(req, res) {
-  var search = new leboncoin.Search().setQuery("leica");
-
-  search.run().then(function(data) {
-    console.log("search", data);
-    res.sendStatus(200);
+  return res.status(200).json({
+    test: true
   });
 });
 
-app.listen(3030, function() {
-  console.log("Example app listening on port 3030!");
+const _port = 1000;
+app.listen(_port, function() {
+  console.log("App listening on port " + _port);
 });
 
 function startProcessing(res) {
@@ -313,19 +309,21 @@ function startProcessing(res) {
   var progression = 0;
   readLastIds();
 
-  function getPage(idq, query, page, firstPageIds) {
+  function getPage(idq, query, page, previousPagesIds) {
     var search = new leboncoin.Search()
       .setPage(page)
       .setQuery(query["url"])
       .setFilter(leboncoin.FILTERS.PARTICULIER);
     /*
-       verifie si toutes les pages on finit
-       */
+        verifie si toutes les pages ont fini
+         */
     function checkFinishAllPage() {
       progression++;
       var size = Object.keys(querys).length;
       if (progression >= size) {
-        res.writeHead(200, { "Content-Type": "text/html" });
+        res.writeHead(200, {
+          "Content-Type": "text/html"
+        });
         res.write(createHtml(finalresultatsfav, finalresultats));
         res.end();
       }
@@ -333,12 +331,13 @@ function startProcessing(res) {
     }
 
     /**
-     * il faut récupérer les annonces d'une page (pagination) tant que on n'est pas sur une annonce deja vue
-     * @param  idq : id de la requete ( a b c d...)
-     * @param  ids : liste des ids temp
+     * il faut récupérer les annonces d'une page (pagination) tant que l'on n'est pas sur une annonce deja vue pour cette recherche
+     * @param idq : id de la requete ( a b c d...)
+     * @param ids : liste des ids temp
      */
     function checkFinishForThisPage(idq, ids, page) {
-      if (page > 3) {
+      if (page > 4) {
+        // on ne prend que les 4 premières page
         return true;
       }
       for (var i in ids) {
@@ -363,54 +362,47 @@ function startProcessing(res) {
       function(data) {
         var tempIds = []; // ids des annonces de la page courante
         // on rajoute toute les annonces de cette page
-
-        console.log("length", JSON.stringify(data.results));
-
         for (var d in data.results) {
           var found = false;
-          for (var l in lastids[idq]) {
-            if (data.results[d]["id"] == lastids[idq][l]) {
-              found = true;
-            } else {
-            }
+
+          if (!lastids["all"][data.results[d]["id"]]) {
+            lastids["all"][data.results[d]["id"]] = 1;
+          } else {
+            found = true;
           }
-          // l'annonce na pas déja été ajoutée
+
+          if (lastids[idq] && lastids[idq].includes(data.results[d]["id"])) {
+            found = true;
+          }
+
+          // l'annonce n'a pas déja été ajoutée
           if (!found) {
             // on n'ajoute pas les annonces ayant un titre avec mot clé à ignorer
-
             data.results[d]["title"] = cleanTitle(data.results[d]["title"]);
 
-            if (
-              !tools_insideWordArray(data.results[d]["title"], filtersIgnore)
-            ) {
-              data.results[d]["timestamp"] = Date.parse(
-                data.results[d]["date"]
-              );
+            if (!tools_insideWordArray(data.results[d]["title"], filtersIgnore)) {
+              data.results[d]["timestamp"] = Date.parse(data.results[d]["date"]);
               if (query["fav"]) {
-                tools_push_unique_object(
-                  finalresultatsfav,
-                  data.results[d],
-                  "id"
-                );
+                tools_push_unique_object(finalresultatsfav, data.results[d], "id");
               } else {
                 tools_push_unique_object(finalresultats, data.results[d], "id");
               }
             } else {
-              cl("ignoring " + data.results[d]["title"]);
+              // cl("ignoring " + data.results[d]["title"]);
             }
           }
 
           tempIds.push(data.results[d]["id"]);
         }
         if (page == 1) {
-          firstPageIds = tools_clone(tempIds);
+          previousPagesIds = tools_clone(tempIds);
         }
 
         if (checkFinishForThisPage(idq, tempIds, page)) {
-          lastids[idq] = firstPageIds;
+          lastids[idq] = previousPagesIds;
           checkFinishAllPage();
         } else {
-          getPage(idq, query, ++page, firstPageIds);
+          getPage(idq, query, ++page, previousPagesIds);
         }
       },
       function(err) {
@@ -427,15 +419,15 @@ function startProcessing(res) {
 
 // permet de recharger les users connectés en cas de crash ou de reload
 var file = "./lastids.json";
-var resetLastIds = function() {
+function resetLastIds() {
   lastids = {};
   jsonfile.writeFile(file, { lastids: lastids }, function(err) {
     if (err) {
       console.error(err);
     }
   });
-};
-var writeLastIds = function() {
+}
+function writeLastIds() {
   if (!tools_defined(lastids)) {
     lastids = {};
   }
@@ -444,16 +436,20 @@ var writeLastIds = function() {
       console.error(err);
     }
   });
-};
-var readLastIds = function() {
+}
+function readLastIds() {
   jsonfile.readFile(file, function(err, obj) {
     if (tools_defined(obj)) {
       lastids = obj["lastids"];
     } else {
       lastids = {};
     }
+
+    if (!tools_defined(lastids["all"])) {
+      lastids["all"] = {};
+    }
   });
-};
+}
 
 /**
  * tools function
@@ -481,12 +477,7 @@ var clnj = function(astring, data) {
  * @returns {boolean}
  */
 var tools_defined = function(object) {
-  return (
-    typeof object !== undefined &&
-    typeof object !== "undefined" &&
-    object !== null &&
-    object !== ""
-  );
+  return typeof object !== undefined && typeof object !== "undefined" && object !== null && object !== "";
 };
 
 /**
@@ -533,12 +524,8 @@ function tools_push_unique_object(arr, obj, uniquefield) {
  */
 function tools_sortArrayOfObject(arr, fieldname) {
   function compare(a, b) {
-    var atmp = tools_isString(a[fieldname])
-      ? a[fieldname].toLowerCase()
-      : a[fieldname];
-    var btmp = tools_isString(b[fieldname])
-      ? b[fieldname].toLowerCase()
-      : b[fieldname];
+    var atmp = tools_isString(a[fieldname]) ? a[fieldname].toLowerCase() : a[fieldname];
+    var btmp = tools_isString(b[fieldname]) ? b[fieldname].toLowerCase() : b[fieldname];
     if (atmp < btmp) return 1;
     if (atmp > btmp) return -1;
     return 0;
@@ -557,10 +544,9 @@ function tools_isString(myVar) {
  * @returns {Object}
  */
 function tools_clone(obj) {
-  //   return jQuery.extend(true, {}, obj);
+  // return jQuery.extend(true, {}, obj);
   function clone(obj) {
-    if (obj === null || typeof obj !== "object" || "isActiveClone" in obj)
-      return obj;
+    if (obj === null || typeof obj !== "object" || "isActiveClone" in obj) return obj;
 
     var temp = obj.constructor(); // changed
 
@@ -581,9 +567,7 @@ function tools_clone(obj) {
 // sensé ne rechercher que les mots entier
 function isMatch(searchOnString, searchText) {
   searchText = searchText.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
-  return (
-    searchOnString.match(new RegExp("\\b" + searchText + "\\b", "i")) != null
-  );
+  return searchOnString.match(new RegExp("\\b" + searchText + "\\b", "i")) != null;
 }
 
 function stringContain(str, substring) {
@@ -597,9 +581,7 @@ function tools_insideWordArray(word, array) {
     for (var i = 0; i < length; i++) {
       array[i] = array[i].toLowerCase();
       if (isMatch(word, array[i])) {
-        console.log(
-          "ignoring : --" + word + "-- because of **" + array[i] + "**"
-        );
+        // console.log("ignoring : --" + word + "-- because of **" + array[i] + "**");
         return true;
       }
     }
