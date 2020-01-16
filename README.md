@@ -4,13 +4,13 @@
 à chaque visite les annonces affichées lors de la dernière consultation ne sont pas affichés, permet de ne pas revoir plusieurs fois la même annonces. 
  
 usage : 
-`> npm install
-ajouter vos requetes dans l'object querys de app.js
+``` > npm install
+// ajouter vos requetes dans l'object querys de app.js
 > npm run 
-ouvrir localhost:3000 
+// ouvrir localhost:3000 
 
 localhost:3000/reset  permet de remettre à zero les annonces déja vues
-`
+```
 
 pour les chasseurs d'annonces !
  
