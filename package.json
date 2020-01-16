@@ -17,7 +17,7 @@
     "helmet": "^3.21.2",
     "ipware": "^1.0.0",
     "jsonfile": "^2.4.0",
-    "jwt-simple": "~0.2.0",
+    "jwt-simple": "~0.5.3",
     "leboncoin-api": "0.0.40",
     "morgan": "^1.5.3",
     "multer": "^1.4.2",
