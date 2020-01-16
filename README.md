@@ -4,7 +4,8 @@
 à chaque visite les annonces affichées lors de la dernière consultation ne sont pas affichés, permet de ne pas revoir plusieurs fois la même annonces. 
  
 usage : 
-``` > npm install
+``` 
+> npm install
 // ajouter vos requetes dans l'object querys de app.js
 > npm run 
 // ouvrir localhost:3000 
